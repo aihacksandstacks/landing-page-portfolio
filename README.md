@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Landing Page Generator
+
+This is a Next.js project that allows users to generate landing page content, specifically headlines, using AI based on their input.
+
+## Core Functionality
+
+- Users can enter a description of their product, company, or idea into a text input field.
+- Clicking the "Generate Headline" button sends this description to a backend API endpoint.
+- The backend API uses the OpenAI API (specifically, the `gpt-3.5-turbo` model) to generate a catchy headline based on the user's input.
+- The generated headline is then displayed back to the user on the page.
 
 ## Getting Started
 
-First, run the development server:
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3.  **Set up environment variables:**
+    Create a file named `.env.local` in the root of the project directory. Add your OpenAI API key to this file:
+    ```
+    OPENAI_API_KEY=your_openai_api_key_here
+    ```
+    Replace `your_openai_api_key_here` with your actual key.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+5.  **Open the application:**
+    Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-## Learn More
+## Current Status
 
-To learn more about Next.js, take a look at the following resources:
+- The application currently generates headlines based on user descriptions.
+- It uses a basic, static frontend structure defined in `src/components/saas-landing-page.tsx`.
+- The backend API route `src/app/api/generate-landing-page/route.ts` handles the interaction with the OpenAI API.
+- Further development could involve generating more landing page elements (e.g., body copy, call-to-actions) and improving the UI/template.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technologies Used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js](https://nextjs.org/) (React Framework)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/) (for styling)
+- [OpenAI API](https://openai.com/api/) (for AI generation)
+- [Shadcn/ui](https://ui.shadcn.com/) (for UI components like Button, Input)
