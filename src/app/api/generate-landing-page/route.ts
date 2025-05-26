@@ -9,38 +9,68 @@ const openai = new OpenAI({
 
 export async function POST(req: NextRequest) {
   try {
-    // 1. Extract prompt from request body
-    const body = await req.json();
-    const prompt = body.prompt;
+    // 1. Extract prompt and template from request body
+    const { prompt, template = 'Thinkific' } = await req.json();
 
     if (!prompt) {
       return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
     }
 
-    console.log(`Received prompt: ${prompt}`);
+    console.log(`Received prompt: ${prompt}, template: ${template}`);
 
-    // 2. Call OpenAI API
+    // 2. Ask for a full landing page schema as JSON, using the selected template style
+    let styleInstruction = '';
+    switch (template) {
+      case 'Thinkific':
+        styleInstruction = 'Use a clean teal-blue and white color palette, multi-offer SaaS sections, modern fonts.';
+        break;
+      case 'Netflix':
+        styleInstruction = 'Use a black background with bold red accents, single subscription offer, minimal copy, email input CTA.';
+        break;
+      case 'LinkedIn Premium':
+        styleInstruction = 'Use professional blue and white colors, highlight upgrade features with data points, single CTA.';
+        break;
+      default:
+        styleInstruction = `Use the ${template} style.`;
+    }
+    const structuredPrompt = `Based on the ${template} template style: ${styleInstruction}
+Generate a landing page as a JSON object with the following keys:
+{
+  "headline": string,
+  "subheadline": string,
+  "description": string,
+  "features": string[],
+  "callToAction": { "text": string, "url": string }
+}
+Use the following product description to fill in the values:
+${prompt}
+Respond ONLY with the JSON.`;
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // Or another suitable model
+      model: "gpt-3.5-turbo",
       messages: [
-        { role: "system", content: "You are a helpful assistant that generates landing page content." },
-        { role: "user", content: prompt }
+        { role: "system", content: "You are a JSON generator for landing pages." },
+        { role: "user", content: structuredPrompt }
       ],
-      max_tokens: 150, // Adjust as needed
+      max_tokens: 500,
     });
 
-    // 3. Extract generated content
-    const generatedContent = completion.choices[0]?.message?.content;
-
-    if (!generatedContent) {
-      console.error("OpenAI response did not contain content:", completion);
-      return NextResponse.json({ error: "Failed to generate content from AI" }, { status: 500 });
+    // 3. Parse JSON from the AI response
+    const raw = completion.choices[0]?.message?.content;
+    if (!raw) {
+      console.error("OpenAI returned empty response", completion);
+      return NextResponse.json({ error: "Empty response from AI" }, { status: 500 });
     }
-
-    console.log(`Generated content: ${generatedContent}`);
-
-    // 4. Return the generated content
-    return NextResponse.json({ generatedText: generatedContent }, { status: 200 });
+    const jsonStart = raw.indexOf('{');
+    const jsonString = jsonStart >= 0 ? raw.slice(jsonStart) : raw;
+    let pageData;
+    try {
+      pageData = JSON.parse(jsonString);
+    } catch (err) {
+      console.error("Failed to parse AI JSON:", raw, err);
+      return NextResponse.json({ error: "Invalid JSON from AI" }, { status: 500 });
+    }
+    // 4. Return the structured landing page data
+    return NextResponse.json(pageData, { status: 200 });
 
   } catch (error: any) {
     console.error("Error in API route:", error);

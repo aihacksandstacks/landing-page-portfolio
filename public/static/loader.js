@@ -1,0 +1,1 @@
+// Turbopack loader stub - no-op to satisfy /static/loader.js requests

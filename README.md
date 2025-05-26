@@ -1,53 +1,61 @@
-# AI Landing Page Generator
+# Portfolio Landing Page Templates
 
-This is a Next.js project that allows users to generate landing page content, specifically headlines, using AI based on their input.
+This project features customizable landing page templates for portfolios and SaaS products.
 
-## Core Functionality
+## Features
 
-- Users can enter a description of their product, company, or idea into a text input field.
-- Clicking the "Generate Headline" button sends this description to a backend API endpoint.
-- The backend API uses the OpenAI API (specifically, the `gpt-3.5-turbo` model) to generate a catchy headline based on the user's input.
-- The generated headline is then displayed back to the user on the page.
+- Multiple landing page templates:
+  - Dark Theme - A modern portfolio template with a dark color scheme, gradient accents, and a clean layout
+  - SaaS Theme - A template for showcasing SaaS products with customizable content generation
 
 ## Getting Started
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd <repository-directory>
-    ```
+First, install dependencies:
 
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
+```bash
+npm install
+# or
+yarn install
+```
 
-3.  **Set up environment variables:**
-    Create a file named `.env.local` in the root of the project directory. Add your OpenAI API key to this file:
-    ```
-    OPENAI_API_KEY=your_openai_api_key_here
-    ```
-    Replace `your_openai_api_key_here` with your actual key.
+Then, run the development server:
 
-4.  **Run the development server:**
-    ```bash
-    npm run dev
-    ```
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-5.  **Open the application:**
-    Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+Open [http://localhost:3000](http://localhost:3000) to see the landing page templates.
 
-## Current Status
+## Customization
 
-- The application currently generates headlines based on user descriptions.
-- It uses a basic, static frontend structure defined in `src/components/saas-landing-page.tsx`.
-- The backend API route `src/app/api/generate-landing-page/route.ts` handles the interaction with the OpenAI API.
-- Further development could involve generating more landing page elements (e.g., body copy, call-to-actions) and improving the UI/template.
+### Dark Theme Template
+
+The dark-themed landing page template can be found in `src/components/dark-landing-page.tsx`. You can customize:
+
+- Hero section text and CTAs
+- Skills and expertise cards
+- Project showcase items
+- Call-to-action sections
+- Footer links and social icons
+
+### SaaS Theme Template
+
+The SaaS landing page template can be found in `src/components/saas-landing-page.tsx`. This template includes:
+
+- AI-powered content generation for landing pages
+- Multiple template styles
+- Customizable sections for headlines, features, and calls to action
+
+## Template Switching
+
+The application includes a template switcher at the top-right corner of the screen, allowing you to toggle between the different landing page templates.
 
 ## Technologies Used
 
-- [Next.js](https://nextjs.org/) (React Framework)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/) (for styling)
-- [OpenAI API](https://openai.com/api/) (for AI generation)
-- [Shadcn/ui](https://ui.shadcn.com/) (for UI components like Button, Input)
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui components

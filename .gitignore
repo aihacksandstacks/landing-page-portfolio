@@ -10,6 +10,13 @@
 !.yarn/releases
 !.yarn/versions
 
+# misc
+/package-lock.json
+/package-lock.json.lock
+/.cursorrules
+/.cursor/
+/venv/
+
 # testing
 /coverage
 
